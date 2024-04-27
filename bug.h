@@ -1,8 +1,39 @@
-//
-// Created by Shahzad Shabeer on 27/04/24.
-//
+#ifndef BUG_HPP
+#define BUG_HPP
 
-#ifndef C__CA2_BUG_H
-#define C__CA2_BUG_H
+#include <iostream>
+#include <list>
+#include <utility>
 
-#endif //C__CA2_BUG_H
+class Bug {
+public:
+    // Constructor
+    Bug(int id, std::pair<int, int> position, int direction, int size);
+
+    // Destructor
+    virtual ~Bug();
+
+    // Pure virtual function for moving the bug
+    virtual void move() = 0;
+
+    // Function to check if the bug's way is blocked
+    bool isWayBlocked();
+
+    // Getter functions
+    int getId() const;
+    std::pair<int, int> getPosition() const;
+    int getDirection() const;
+    int getSize() const;
+    bool isAlive() const;
+    std::list<std::pair<int, int>> getPath() const;
+
+protected:
+    int id;
+    std::pair<int, int> position;
+    int direction;
+    int size;
+    bool alive;
+    std::list<std::pair<int, int>> path;
+};
+
+#endif // BUG_HPP
