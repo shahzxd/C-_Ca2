@@ -1,13 +1,10 @@
 #include "Bug.h"
-
+#include <iostream> // Include necessary headers
 #include <string>
-
 #include <utility>
-#include <iostream>
+#include <list>
 
-using namespace std;
-
-Bug::Bug(int id, pair<int, int> position, int direction, int size, bool alive, list<pair<int, int>> path) {
+Bug::Bug(int id, std::pair<int, int> position, int direction, int size, bool alive, std::list<std::pair<int, int>> path) {
     this->id = id;
     this->position = position;
     this->direction = direction;
@@ -16,7 +13,7 @@ Bug::Bug(int id, pair<int, int> position, int direction, int size, bool alive, l
     this->path = path;
 }
 
-bool Bug::isWayBlocked() {
+bool Bug::isWayBlocked() const { // Declare as const
     int boardWidth = 10;
     int boardHeight = 10;
 
@@ -47,21 +44,18 @@ bool Bug::isWayBlocked() {
 
     return false;
 }
-bool Bug::isIdSame(int id) {
-    if (this->id == id) {
-        return true;
-    }
-    else {
-        return false;
-    }
+
+bool Bug::isIdSame(int otherId) const { // Declare as const, rename parameter
+    return this->id == otherId;
 }
-string Bug::bugHistory() {
-    string final = to_string(id) + " " + type + " Path: ";;
-    for (list<pair<int, int>>::const_iterator it = path.cbegin(); it != path.cend(); ++it) {
-        final += "(" + to_string(it->first) + ", " + to_string(it->second) + "), ";
+
+std::string Bug::bugHistory() const { // Declare as const
+    std::string final = std::to_string(id) + " " + type + " Path: ";
+    for (std::list<std::pair<int, int>>::const_iterator it = path.cbegin(); it != path.cend(); ++it) {
+        final += "(" + std::to_string(it->first) + ", " + std::to_string(it->second) + "), ";
     }
 
-    string status = "Alive!";
+    std::string status = "Alive!";
     if (!alive) {
         status = "Dead!";
     }
@@ -71,6 +65,6 @@ string Bug::bugHistory() {
     return final;
 }
 
-void Bug::outputBugHistory() {
-    cout << bugHistory();
+void Bug::outputBugHistory() const {
+    std::cout << bugHistory();
 }
