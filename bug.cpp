@@ -1,39 +1,76 @@
-#include "Bug.hpp"
+#include "Bug.h"
 
-// Constructor
-Bug::Bug(int id, std::pair<int, int> position, int direction, int size)
-        : id(id), position(position), direction(direction), size(size), alive(true) {}
+#include <string>
+//#include <list>
+#include <utility>
+#include <iostream>
 
-// Destructor
-Bug::~Bug() {}
+using namespace std;
 
-// Function to check if the bug's way is blocked
+Bug::Bug(int id, pair<int, int> position, int direction, int size, bool alive, list<pair<int, int>> path) {
+    this->id = id;
+    this->position = position;
+    this->direction = direction;
+    this->size = size;   //1 - 20
+    this->alive = alive;
+    this->path = path;
+}
+
 bool Bug::isWayBlocked() {
-    // Implement logic to check if the bug is against an edge of the board
-    // and if it is facing in the direction of that edge.
+    int boardWidth = 10;
+    int boardHeight = 10;
+
+    switch(direction) {
+        case 1:
+            if (position.second <= 0) {
+                return true;
+            }
+            break;
+        case 2:
+            if (position.first >= boardWidth) {
+                return true;
+            }
+            break;
+        case 3:
+            if (position.second >= boardHeight) {
+                return true;
+            }
+            break;
+        case 4:
+            if (position.first <= 0) {
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
+
+    return false;
+}
+bool Bug::isIdSame(int id) {
+    if (this->id == id) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+string Bug::bugHistory() {
+    string final = to_string(id) + " " + type + " Path: ";;
+    for (list<pair<int, int>>::const_iterator it = path.cbegin(); it != path.cend(); ++it) {
+        final += "(" + to_string(it->first) + ", " + to_string(it->second) + "), ";
+    }
+
+    string status = "Alive!";
+    if (!alive) {
+        status = "Dead!";
+    }
+
+    final += status + "\n";
+
+    return final;
 }
 
-// Getter functions
-int Bug::getId() const {
-    return id;
-}
-
-std::pair<int, int> Bug::getPosition() const {
-    return position;
-}
-
-int Bug::getDirection() const {
-    return direction;
-}
-
-int Bug::getSize() const {
-    return size;
-}
-
-bool Bug::isAlive() const {
-    return alive;
-}
-
-std::list<std::pair<int, int>> Bug::getPath() const {
-    return path;
+void Bug::outputBugHistory() {
+    cout << bugHistory();
 }
