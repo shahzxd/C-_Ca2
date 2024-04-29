@@ -16,16 +16,23 @@ protected:
     std::string type;
 
 public:
-    Bug(int id = 0, std::pair<int, int> position = {0, 0}, int direction = 1, int size = 1, bool alive = true, std::list<std::pair<int, int>> path = {});
+    // Constructors
+    Bug(int id = 0, const std::pair<int, int>& position = {0, 0}, int direction = 1, int size = 1, bool alive = true, const std::list<std::pair<int, int>>& path = {});
+
+    // Destructor
     virtual ~Bug() = default;
+
+    // Pure virtual function for movement
     virtual void move() = 0;
+
+    // Utility functions
     bool isWayBlocked() const;
-    virtual void outputBug() const = 0;
     bool isIdSame(int otherId) const;
     std::string bugHistory() const;
-    void outputBugHistory() const;
 
-    void outputBugHistory();
+    // Virtual function for outputting bug information
+    virtual void outputBug() const = 0;
+    void outputBugHistory() const;
 };
 
-#endif
+#endif // BUG_H
